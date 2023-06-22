@@ -1,0 +1,14 @@
+<!-- API FAILURE ERROR MESSAGE DISPLAY -->
+
+<div
+  *ngIf="errorService.error$ | async as error"
+  class="h-[50px] flex justify-center items-center bg-red-600 text-white relative"
+>
+  {{ error }}
+  <button
+    class="absolute top-3 right-5 text-white font-bold"
+    (click)="errorService.clear()"
+  >
+    &times;
+  </button>
+</div>

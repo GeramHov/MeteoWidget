@@ -1,0 +1,50 @@
+.weather.card {
+    margin-top:4vh;
+}
+
+img{
+    width: 25%;
+    height: 25%;
+}
+
+.weather .temperature {
+    margin-left:4vh;
+    font-size:120px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.edit{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.current{
+    font-family: 'Roboto', sans-serif;
+    color: #b45309;
+    font-size: large;
+}
+
+.day{
+    font-family: 'Roboto', sans-serif;
+    color: #fbbf24
+}
+
+@media(max-width: 1025px){
+    .weather {
+        height: 45vh;
+        width: 90vw;
+    }
+
+    .weather .temperature {
+        margin-left:3vh;
+        font-size:60px;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    img{
+        width: 60%;
+        height: 60%;
+
+    }
+}

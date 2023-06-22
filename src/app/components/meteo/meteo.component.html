@@ -1,0 +1,140 @@
+<!-- LOADING WHEN CONNECT API -->
+<p *ngIf="loading" class="text-center text-lg text-white">Loading...</p>
+<!--  -->
+<div class="row">
+  <div class="flex-cols-12 flex justify-center py-5">
+    <div class="weather card blue-grey darken-1 w-1/2">
+      <div class="flex justify-center">
+        <!-- CURRENT CITY NAME -->
+        <span *ngIf="!edit" class="card-title font-bold text-blue-200">{{
+          meteoData.city.name
+        }}</span>
+        <!--  -->
+        <!-- COUNTRY -->
+        <span *ngIf="!edit" class="card-body font-bold text-blue-200 me-4"
+          >, {{ meteoData.city.country }}</span
+        >
+        <!--  -->
+        <!-- BUTTON TO SHOW INPUT -->
+        <img
+          *ngIf="!edit"
+          class="edit"
+          src="../../../assets/images/edit.png"
+          alt=""
+          (click)="showInput()"
+        />
+        <!--  -->
+        <!-- FORM / INPUT TO SWITCH THE CITIES -->
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <button
+            *ngIf="input"
+            class="text-white font-bold pe-2"
+            (click)="closeInput()"
+          >
+            &times;
+          </button>
+
+          <input
+            class="py-2"
+            *ngIf="input"
+            type="text"
+            id=""
+            placeholder=" Nom de la ville"
+            formControlName="title"
+          />
+
+          <button
+            *ngIf="input"
+            type="submit"
+            class="bg-blue-500 text-white p-2 font-thin"
+          >
+            Search
+          </button>
+        </form>
+      </div>
+
+      <!-- CITY NOT FOUND / ERROR MESSAGE -->
+      <p
+        *ngIf="input && errorMessage && cityNameError"
+        class="text-center text-lg text-red-500 py-2 font-thin"
+      >
+        {{ errorMessage }}
+      </p>
+      <!--  -->
+      <!-- SWITCH BACKGROUND WHEN DAY OR NOT -->
+      <div
+        class="card-content bg-slate-400 text-white my-5 pb-4 {{
+          meteoData.isDay ? 'bg-blue-400 text-blue-950' : 'bg-slate-900'
+        }}"
+      >
+        <!--  -->
+        <p class="flex justify-center py-3">
+          <!-- MANAGING ALL WEATHER FEATURE CASES -->
+          <img
+            *ngIf="meteoData.list[dayIndex].weather[0].main === 'Thunderstorm'"
+            src="../../../assets/images/thunder.svg"
+          />
+          <img
+            *ngIf="meteoData.list[dayIndex].weather[0].main === 'Rain'"
+            src="../../../assets/images/rainy.svg"
+          />
+          <img
+            *ngIf="meteoData.list[dayIndex].weather[0].main === 'Snow'"
+            src="../../../assets/images/snowy.svg"
+          />
+          <img
+            *ngIf="meteoData.list[dayIndex].weather[0].main === 'Clear'"
+            src="../../../assets/images/sun.svg"
+          />
+          <img
+            *ngIf="meteoData.list[dayIndex].weather[0].main === 'Clouds'"
+            src="../../../assets/images/cloudy-sun.svg"
+          />
+          <img
+            *ngIf="meteoData.list[dayIndex].weather[0].main === 'Drizzle'"
+            src="../../../assets/images/storm.svg"
+          />
+        </p>
+        <!--  -->
+        <!-- MAIN TEMPERATURE IN CELSIUS -->
+        <span class="temperature"
+          >{{ (meteoData.list[dayIndex].main.temp - 273.15).toFixed(0) }}°</span
+        >
+        <!--  -->
+        <!-- WIND -->
+        <div class="wind py-3">
+          Vent {{ meteoData.list[dayIndex].wind.speed | number : "1.0-0" }} km/h
+          ({{ meteoData.list[dayIndex].wind.deg }}°)
+        </div>
+      </div>
+      <!--  -->
+      <div class="card-action p-5 col-auto">
+        <!-- SHOWING CURRENT DAY -->
+
+        <a
+          (click)="nextDay(0, $event)"
+          href=""
+          class="mx-3"
+          [ngClass]="{ current: dayIndex === 0, day: dayIndex !== 0 }"
+          >{{ currentDay }}</a
+        >
+        <!--  -->
+
+        <!-- SHOWING 3 FOLLOWING DAY -->
+
+        <a
+          *ngFor="let day of nextDays; let i = index"
+          (click)="nextDay(i + 8, $event)"
+          href=""
+          class="mx-3"
+          [ngClass]="{
+            current: activeIndex === i + 8,
+            day: activeIndex !== i + 8
+          }"
+          >{{ day }}</a
+        >
+        <!--  -->
+      </div>
+    </div>
+  </div>
+</div>
